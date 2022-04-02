@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.instagram.fragments.ComposeFragment
 import com.example.instagram.fragments.FeedFragment
+import com.example.instagram.fragments.ProfileFrament
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.parse.*
 import java.io.File
@@ -46,8 +47,8 @@ class MainActivity : AppCompatActivity() {
                     fragmentToShow = ComposeFragment()
                 }
                 R.id.action_profile -> {
+                    fragmentToShow = ProfileFrament()
                     //Navigate to Profile Screen
-                    Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -61,26 +62,7 @@ class MainActivity : AppCompatActivity() {
 
 
     // Returns the File for a photo stored on disk given the fileName
-    //Query for all post in our server
-    fun queryPosts() {
-        val query: ParseQuery<Post> = ParseQuery.getQuery(Post::class.java)
-        //Find all post objects
-        query.include(Post.KEY_USER)
-        query.findInBackground(object : FindCallback<Post> {
-            override fun done(posts: MutableList<Post>?, e: ParseException?) {
-                if (e != null) {
-                    Log.e(TAG, "Error Fetching posts")
-                } else {
-                    if (posts != null) {
-                        for (post in posts) {
-                            Log.i(TAG, "Post:" + post.getDescription() + ", username: "+
-                                    post.getUser()?. username)
-                        }
-                    }
-                }
-            }
-        })
-    }
+
     companion object {
         const val TAG = "MainActivity"
     }
